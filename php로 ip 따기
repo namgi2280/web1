@@ -1,0 +1,36 @@
+<?php
+$fp = fopen("log.txt" , "w");
+$ip_address;
+$ip_address = $_SERVER["REMOTE_ADDR"];
+// 시간을 ppap로 선언!
+$ppap = date("Y-m-d H:i:s");
+
+//IP와 시간을 작성
+fwrite($fp, "$ppap \n");
+fwrite($fp, "$ip_address : 아이피 $value \n");
+
+//파일을 닫아라!
+fclose($fp);
+function get_client_ip() {
+    $ipaddress = '';
+    if (getenv('HTTP_CLIENT_IP'))
+        $ipaddress = getenv('HTTP_CLIENT_IP');
+    else if(getenv('HTTP_X_FORWARDED_FOR'))
+        $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+    else if(getenv('HTTP_X_FORWARDED'))
+        $ipaddress = getenv('HTTP_X_FORWARDED');
+    else if(getenv('HTTP_FORWARDED_FOR'))
+        $ipaddress = getenv('HTTP_FORWARDED_FOR');
+    else if(getenv('HTTP_FORWARDED'))
+        $ipaddress = getenv('HTTP_FORWARDED');
+    else if(getenv('REMOTE_ADDR'))
+        $ipaddress = getenv('REMOTE_ADDR');
+    else
+        $ipaddress = 'UNKNOWN';
+    return $ipaddress;
+}
+echo "SERVER 함수 사용자 아이피 : ".$_SERVER['REMOTE_ADDR'];
+echo "<br>";
+echo "getenv 사용자 아이피 : ".get_client_ip();
+?>
+
